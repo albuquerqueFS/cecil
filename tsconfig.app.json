@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components/*": ["./src/components/*"],
-      "features/*": ["./src/features/*"]
+      "@api/*": ["./src/api/*"],
+      "@components/*": ["./src/components/*"],
+      "@features/*": ["./src/features/*"]
     },
 
     "target": "ES2020",

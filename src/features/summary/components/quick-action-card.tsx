@@ -1,6 +1,11 @@
-import { Button } from "components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
-import { Input } from "components/ui/input";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+} from "@components/ui";
 import { FC, useState } from "react";
 import { Action } from "src/@types/summary";
 
@@ -37,7 +42,7 @@ const QuickActionCard: FC<Props> = ({
           </Button>
         </CardContent>
       </Card>
-      <div className="flex mt-2 ml-2">{footer}</div>
+      {/* <div className="flex mt-2 ml-2">{footer}</div> */}
     </div>
   );
 };

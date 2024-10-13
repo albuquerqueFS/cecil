@@ -1,75 +1,53 @@
 import { toast } from "sonner";
 import QuickActionCard from "./components/quick-action-card";
 import { actionCards } from "./const";
-import SummaryCard from "./components/summary-card";
+import {
+  QuickSummaryCard,
+  StatsSummary,
+} from "./components/quick-summary-card";
 
-const Separator = () => (
-  <div className="h-full min-w-[2px] py-8 -mt-4 mx-6 bg-slate-200"></div>
-);
+const lastEntries = [
+  { value: "R$500,00", description: "2/2 Salário" },
+  { value: "R$700,00", description: "Retorno Impos..." },
+  { value: "R$900,00", description: "1/2 Salário" },
+  { value: "R$1200,00", description: "BCG Salário" },
+];
 
-const LastEntries = () => (
-  <div className="relative flex flex-col items-start justify-start gap-2 h-fit">
-    <div className="absolute top-0 left-0 w-full h-[70px] bg-gradient-to-t from-white from-[3%] to-transparent"></div>
-    <p className="ml-1 -mt-6 text-xs font-light whitespace-nowrap">
-      Ultimas entradas
-    </p>
-    <ul className="flex flex-col items-start justify-start flex-nowrap">
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-green-600">R$500,00</span> 2/2 Salário
-      </li>
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-green-600">R$700,00</span> Retorno Impos...
-      </li>
-      <li className="text-sm">
-        <span className="mr-2 text-green-600">R$900,00</span> 1/2 Salário
-      </li>
-      <li className="text-sm">
-        <span className="mr-2 text-green-600">R$1200,00</span> BCG Salário
-      </li>
-    </ul>
-  </div>
-);
-
-const LastExpenses = () => (
-  <div className="relative flex flex-col items-start justify-start gap-2 h-fit">
-    <div className="absolute top-0 left-0 w-full h-[70px] bg-gradient-to-t from-white from-[3%] to-transparent"></div>
-    <p className="ml-1 -mt-6 text-xs font-light whitespace-nowrap">
-      Ultimos gastos
-    </p>
-    <ul className="flex flex-col items-start justify-start">
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-red-600">R$500,00</span> Fatura Nubank
-      </li>
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-red-600">R$1900,00</span> Aluguel
-      </li>
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-red-600">R$900,00</span> 1/2 Salário
-      </li>
-      <li className="text-sm whitespace-nowrap">
-        <span className="mr-2 text-red-600">R$1200,00</span> BCG Salário
-      </li>
-    </ul>
-  </div>
-);
-
-const StatsSummary = () => (
-  <div className="relative flex flex-col items-start justify-start gap-2 pr-4">
-    <p className="ml-1 -mt-6 text-xs font-light whitespace-nowrap">Este mês</p>
-    <ul className="flex flex-col items-start justify-start">
-      <li className="text-sm whitespace-nowrap">
-        <span className="text-green-600">R$9800,42</span> em entradas
-      </li>
-      <li className="text-sm whitespace-nowrap">
-        <span className="text-red-600">R$5120,10</span> em gastos
-      </li>
-    </ul>
-  </div>
-);
+const lastExpenses = [
+  { value: "R$500,00", description: "Fatura Nubank" },
+  { value: "R$1900,00", description: "Aluguel" },
+  { value: "R$900,00", description: "1/2 Salário" },
+  { value: "R$1200,00", description: "BCG Salário" },
+];
 
 const SummaryPage = () => {
   return (
-    <div className="max-w-[1100px] mx-auto">
+    <div className="w-full">
+      <div className="flex items-start justify-start mt-8 mb-2">
+        <h1 className="text-3xl font-bold tracking-tight text-left ">
+          Visão Resumida
+        </h1>
+
+        <div className="ml-6 text-green-500">
+          <span className="text-2xl">R$</span>
+          <span className="text-3xl">2.000,00+</span>
+        </div>
+      </div>
+
+      <div className="grid w-full grid-cols-3 gap-4 pt-4">
+        <QuickSummaryCard
+          title="Ultimas entradas"
+          values={lastEntries}
+          color="green-500"
+        />
+        <QuickSummaryCard
+          title="Ultimos gastos"
+          values={lastExpenses}
+          color="red-500"
+        />
+        <StatsSummary />
+      </div>
+
       <div className="grid grid-cols-3 gap-2 flex-nowrap">
         {actionCards.map((action, index) => (
           <QuickActionCard
@@ -81,28 +59,21 @@ const SummaryPage = () => {
           />
         ))}
       </div>
-      <h1 className="my-6 text-3xl font-bold tracking-tight text-left">
-        Visão Resumida
+
+      <h1 className="mt-8 text-3xl font-bold tracking-tight text-left">
+        Seus Investimentos
       </h1>
-      <div className="grid grid-cols-3 gap-2 flex-nowrap">
-        <SummaryCard
-          title={<h1>Receitas</h1>}
-          value={
-            <div className="flex justify-start flex-nowrap h-[30px]">
-              <span className="flex items-start text-green-500">
-                <span className="text-2xl">R$</span>
-                <span className="text-3xl">2.000,00+</span>
-              </span>
-              <Separator />
-              <LastEntries />
-              <Separator />
-              <LastExpenses />
-              <Separator />
-              <StatsSummary />
-            </div>
-          }
-          className="col-span-3"
-        />
+      <div className="mt-4">
+        <div className="flex flex-col items-start">
+          <p className="ml-1 text-xs font-light whitespace-nowrap">
+            Criptomoedas
+          </p>
+          <ul>
+            <li>
+              <span className="font-bold">SUI</span> - <span>R$12402,42</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
