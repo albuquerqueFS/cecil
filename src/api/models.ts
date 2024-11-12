@@ -28,3 +28,9 @@ export type AwesomeApiHistoryResponse = {
   ask: string;
   timestamp: string;
 };
+
+export type JWTToken = {
+  access: string;
+  refresh: string;
+  name: string;
+};

@@ -1,28 +1,40 @@
+import BaseLayout from "@components/layouts/base-layout";
+import AuthPage from "@features/auth/auth-page";
+import SummaryPage from "@features/summary/summary-page";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
-
-import "./App.css";
-import { QueryClientProvider } from "@tanstack/react-query";
-import BaseLayout from "@components/layouts/base-layout";
-import SummaryPage from "@features/summary/summary-page";
 import { queryClient } from "./api";
-import LoginPage from "@features/login/login-page";
+import "./App.css";
+import Auth from "./lib/auth/auth";
+import AuthProvider from "./providers/auth-provider";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <BaseLayout />,
+      element: (
+        <AuthProvider>
+          <Auth />
+        </AuthProvider>
+      ),
       children: [
         {
-          path: "/",
-          element: <SummaryPage />,
+          path: "app",
+          element: <BaseLayout />,
+          children: [
+            {
+              path: "",
+              element: <SummaryPage />,
+              children: [],
+            },
+          ],
+        },
+        {
+          path: "/auth/:type",
+          element: <AuthPage />,
         },
       ],
-    },
-    {
-      path: "/login",
-      element: <LoginPage />,
     },
   ]);
 

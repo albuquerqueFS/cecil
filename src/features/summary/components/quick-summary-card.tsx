@@ -11,7 +11,7 @@ export const QuickSummaryCard = ({ title, values, color }: Props) => {
       <p className="ml-1 text-xs font-light whitespace-nowrap">{title}</p>
       <ul className="flex flex-col items-start justify-start flex-nowrap">
         {values.map((entry) => (
-          <li className="text-sm whitespace-nowrap">
+          <li className="text-sm whitespace-nowrap" key={entry.value}>
             <span className={`mr-2 text-${color}`}>{entry.value}</span>{" "}
             {entry.description}
           </li>

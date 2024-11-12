@@ -23,7 +23,7 @@ const lastExpenses = [
 const SummaryPage = () => {
   return (
     <div className="w-full">
-      <div className="flex items-start justify-start mt-8 mb-2">
+      <div className="flex items-start justify-start mt-2 mb-2">
         <h1 className="text-3xl font-bold tracking-tight text-left ">
           Visão Resumida
         </h1>

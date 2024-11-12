@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    container_name: lafinas
+    container_name: frontend
     image: lafinas-web
     build:
       context: .
@@ -12,8 +12,8 @@ services:
     ports:
       - "5173:5173"
     networks:
-      - lafinas
+      - lafinas-network
 
 networks:
-  lafinas:
-    driver: bridge
+  lafinas-network:
+    external: true
