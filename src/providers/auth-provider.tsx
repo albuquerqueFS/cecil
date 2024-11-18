@@ -1,5 +1,5 @@
-import { axios } from "@api/index";
-import { JWTToken } from "@api/models";
+import axios from "@api/config/axios";
+import { JWTToken } from "@api/config/models";
 import {
   createContext,
   PropsWithChildren,
@@ -45,12 +45,12 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      localStorage.setItem("refresh", refresh as string);
+      localStorage.setItem("refreshToken", refresh as string);
       localStorage.setItem("token", token);
       localStorage.setItem("name", name as string);
     } else {
       delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("refresh");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("token");
       localStorage.removeItem("name");
       navigate("/auth/login");

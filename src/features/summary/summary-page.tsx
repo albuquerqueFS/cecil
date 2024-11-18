@@ -1,10 +1,12 @@
 import { toast } from "sonner";
 import QuickActionCard from "./components/quick-action-card";
-import { actionCards } from "./const";
 import {
   QuickSummaryCard,
   StatsSummary,
 } from "./components/quick-summary-card";
+import InvestmentsTable from "./components/investments-table";
+import { useCreateMovement } from "@api/movements";
+import { MovementTypes } from "src/lib/enums";
 
 const lastEntries = [
   { value: "R$500,00", description: "2/2 Salário" },
@@ -21,6 +23,7 @@ const lastExpenses = [
 ];
 
 const SummaryPage = () => {
+  const { mutateAsync } = useCreateMovement();
   return (
     <div className="w-full">
       <div className="flex items-start justify-start mt-2 mb-2">
@@ -49,31 +52,67 @@ const SummaryPage = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-2 flex-nowrap">
-        {actionCards.map((action, index) => (
-          <QuickActionCard
-            key={index}
-            action={action}
-            onAdd={(value: number) => {
-              toast.success(action.successMessage + ", R$" + value.toFixed(2));
-            }}
-          />
-        ))}
+        <QuickActionCard
+          labelPlaceholder="Venda do carro"
+          valuePlaceholder="20.000,00"
+          action={{
+            title: "Adicionar entrada",
+            icon: "💰",
+          }}
+          onAdd={({ name, value }) => {
+            mutateAsync({
+              name,
+              value,
+              type: MovementTypes.INCOME,
+              category: "VENDA",
+              is_recurrent: false,
+            });
+            toast.success("Nova entrada adicionada! R$" + value.toFixed(2));
+          }}
+        />
+        <QuickActionCard
+          labelPlaceholder="Cabelereiro"
+          valuePlaceholder="30,00"
+          action={{
+            title: "Adicionar Gasto",
+            icon: "💸",
+            footer: (
+              <p className="text-sm">
+                Ultima entrada{" "}
+                <span className="font-bold text-green-500">R$1200,00</span>
+              </p>
+            ),
+          }}
+          onAdd={(value: number) => {
+            toast.success("Novo gasto adicionado! R$" + value.toFixed(2));
+          }}
+        />
+        <QuickActionCard
+          labelPlaceholder="Salário"
+          valuePlaceholder="5.000,00"
+          action={{
+            title: "Adicionar item recorrente",
+            icon: "🔄",
+            footer: (
+              <p className="text-sm">
+                Ultimo gasto{" "}
+                <span className="font-bold text-red-500">R$500,00</span>
+              </p>
+            ),
+          }}
+          onAdd={(value: number) => {
+            toast.success(
+              "Novo gasto recorrente adicionado, R$" + value.toFixed(2)
+            );
+          }}
+        />
       </div>
 
       <h1 className="mt-8 text-3xl font-bold tracking-tight text-left">
         Seus Investimentos
       </h1>
-      <div className="mt-4">
-        <div className="flex flex-col items-start">
-          <p className="ml-1 text-xs font-light whitespace-nowrap">
-            Criptomoedas
-          </p>
-          <ul>
-            <li>
-              <span className="font-bold">SUI</span> - <span>R$12402,42</span>
-            </li>
-          </ul>
-        </div>
+      <div className="grid grid-cols-2">
+        <InvestmentsTable />
       </div>
     </div>
   );

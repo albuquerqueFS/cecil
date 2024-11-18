@@ -1,6 +1,6 @@
 import { createMutation } from "src/lib/factories/mutation";
-import { axios } from "./config/axios";
-import { JWTToken } from "./models";
+import axios from "./config/axios";
+import { JWTToken } from "./config/models";
 
 export const useLogin = createMutation({
   mutationFn: async (data: { email: string; password: string }) => {

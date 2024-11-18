@@ -2,12 +2,16 @@ import BaseLayout from "@components/layouts/base-layout";
 import AuthPage from "@features/auth/auth-page";
 import SummaryPage from "@features/summary/summary-page";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { Toaster } from "sonner";
-import { queryClient } from "./api";
 import "./App.css";
 import Auth from "./lib/auth/auth";
 import AuthProvider from "./providers/auth-provider";
+import { queryClient } from "@api/config/react-query";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +23,10 @@ function App() {
         </AuthProvider>
       ),
       children: [
+        {
+          path: "",
+          element: <Navigate to="/app" replace />,
+        },
         {
           path: "app",
           element: <BaseLayout />,
@@ -35,6 +43,10 @@ function App() {
           element: <AuthPage />,
         },
       ],
+    },
+    {
+      path: "*",
+      element: <Navigate to="/app" replace />,
     },
   ]);
 

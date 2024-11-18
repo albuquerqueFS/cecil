@@ -8,7 +8,6 @@ const BaseLayout: FC = () => {
   const { token } = useAuth();
 
   if (!token) {
-    console.log({ token });
     return <Navigate to="/auth/login" />;
   }
 

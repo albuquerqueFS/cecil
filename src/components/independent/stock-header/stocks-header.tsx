@@ -1,4 +1,7 @@
-import { AwesomeApiHistoryResponse, CurrencySelectors } from "@api/models";
+import {
+  AwesomeApiHistoryResponse,
+  CurrencySelectors,
+} from "@api/config/models";
 import StockChart from "./stock-chart";
 import { useCurrencyPrices, useCurrencyPricesHistory } from "@api/currencies";
 import { formatCurrency } from "src/lib/utils";

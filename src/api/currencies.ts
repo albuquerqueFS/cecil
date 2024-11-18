@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { AwesomeApiHistoryResponse, AwesomeApiItemResponse } from "./models";
+import {
+  AwesomeApiHistoryResponse,
+  AwesomeApiItemResponse,
+} from "./config/models";
 
 export const useCurrencyPrices = () => {
   return useQuery<AwesomeApiItemResponse>({

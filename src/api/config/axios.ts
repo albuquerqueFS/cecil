@@ -11,15 +11,54 @@ const axios = Axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-const setAuthToken = (token: string | null) => {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = localStorage.getItem("refreshToken");
+        const response = await axios.post("/api/token/refresh", {
+          refreshToken,
+        });
+        const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem("refreshToken", newRefreshToken);
+
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+
+        return axios(originalRequest);
+      } catch (refreshError) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "/auth/login";
+
+        return Promise.reject(refreshError);
+      }
+    }
+    return Promise.reject(error);
   }
-};
+);
 
-const token = localStorage.getItem("token");
-setAuthToken(token);
+axios.interceptors.request.use(
+  (request) => {
+    const accessToken = localStorage.getItem("token");
+    if (accessToken) {
+      request.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-export { axios, setAuthToken };
+export default axios;
