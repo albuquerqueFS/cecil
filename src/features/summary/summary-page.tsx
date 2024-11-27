@@ -1,12 +1,9 @@
-import { toast } from "sonner";
 import QuickActionCard from "./components/quick-action-card";
 import {
   QuickSummaryCard,
   StatsSummary,
 } from "./components/quick-summary-card";
 import InvestmentsTable from "./components/investments-table";
-import { useCreateMovement } from "@api/movements";
-import { MovementTypes } from "src/lib/enums";
 
 const lastEntries = [
   { value: "R$500,00", description: "2/2 Salário" },
@@ -23,7 +20,6 @@ const lastExpenses = [
 ];
 
 const SummaryPage = () => {
-  const { mutateAsync } = useCreateMovement();
   return (
     <div className="w-full">
       <div className="flex items-start justify-start mt-2 mb-2">
@@ -54,28 +50,19 @@ const SummaryPage = () => {
       <div className="grid grid-cols-3 gap-2 flex-nowrap">
         <QuickActionCard
           labelPlaceholder="Venda do carro"
-          valuePlaceholder="20.000,00"
           action={{
             title: "Adicionar entrada",
             icon: "💰",
+            successMessage: "Entrada adicionada com sucesso!",
           }}
-          onAdd={({ name, value }) => {
-            mutateAsync({
-              name,
-              value,
-              type: MovementTypes.INCOME,
-              category: "VENDA",
-              is_recurrent: false,
-            });
-            toast.success("Nova entrada adicionada! R$" + value.toFixed(2));
-          }}
+          onAdd={() => {}}
         />
         <QuickActionCard
           labelPlaceholder="Cabelereiro"
-          valuePlaceholder="30,00"
           action={{
             title: "Adicionar Gasto",
             icon: "💸",
+            successMessage: "Gasto adicionado com sucesso!",
             footer: (
               <p className="text-sm">
                 Ultima entrada{" "}
@@ -83,16 +70,14 @@ const SummaryPage = () => {
               </p>
             ),
           }}
-          onAdd={(value: number) => {
-            toast.success("Novo gasto adicionado! R$" + value.toFixed(2));
-          }}
+          onAdd={() => {}}
         />
         <QuickActionCard
           labelPlaceholder="Salário"
-          valuePlaceholder="5.000,00"
           action={{
             title: "Adicionar item recorrente",
             icon: "🔄",
+            successMessage: "Item recorrente adicionado com sucesso!",
             footer: (
               <p className="text-sm">
                 Ultimo gasto{" "}
@@ -100,11 +85,7 @@ const SummaryPage = () => {
               </p>
             ),
           }}
-          onAdd={(value: number) => {
-            toast.success(
-              "Novo gasto recorrente adicionado, R$" + value.toFixed(2)
-            );
-          }}
+          onAdd={() => null}
         />
       </div>
 
