@@ -1,6 +1,28 @@
+html,
+body {
+    height: 100%;
+    font-smooth: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Poppins", sans-serif;
+}
+
+p,
+span,
+i {
+    font-family: "Roboto", sans-serif;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0.5rem 2rem;
-  text-align: center;
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+    text-align: center;
 }

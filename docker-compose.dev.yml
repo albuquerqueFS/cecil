@@ -1,19 +1,19 @@
 version: "3.8"
 
 services:
-  app:
-    container_name: frontend
-    image: lafinas-web
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./src:/app/src
-    ports:
-      - "5173:5173"
-    networks:
-      - lafinas-network
+    app:
+        container_name: frontend
+        image: lafinas-web
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./src:/app/src
+        ports:
+            - "5173:5173"
+        networks:
+            - lafinas-network
 
 networks:
-  lafinas-network:
-    external: true
+    lafinas-network:
+        external: true

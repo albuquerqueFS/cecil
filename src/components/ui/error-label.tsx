@@ -1,9 +1,9 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react"
 
 const ErrorLabel = ({ children, ...props }: PropsWithChildren<any>) => (
-  <span className="text-red-600 font-light text-sm" {...props}>
-    {children}
-  </span>
-);
+    <span className="text-sm font-light text-red-600" {...props}>
+        {children}
+    </span>
+)
 
-export default ErrorLabel;
+export default ErrorLabel

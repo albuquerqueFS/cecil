@@ -1,6 +1,6 @@
 export interface Action {
-  title: string;
-  icon: React.ReactNode;
-  successMessage: string;
-  footer?: React.ReactNode;
+    title: string
+    icon: React.ReactNode
+    successMessage: string
+    footer?: React.ReactNode
 }
