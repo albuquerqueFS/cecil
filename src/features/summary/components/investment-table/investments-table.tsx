@@ -3,24 +3,19 @@ import { Skeleton } from "@components/ui/skeleton"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@components/ui/table"
-import { useEffect } from "react"
+import { PlusIcon } from "@radix-ui/react-icons"
+import NewInvestmentForm from "./new-investment-dialog"
 
 const InvestmentsTable = () => {
     const { data, isLoading } = useInvestments()
-
-    useEffect(() => {
-        console.log(data)
-    }, [data])
-
+    console.log("investimentos", data)
     return (
         <Table>
-            <TableCaption>Seus investimentos</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>Investimentos</TableHead>
@@ -43,6 +38,13 @@ const InvestmentsTable = () => {
                             </TableCell>
                         </TableRow>
                     ))}
+                {data?.length === 0 && (
+                    <TableRow>
+                        <TableCell className="text-left" colSpan={3}>
+                            Nenhum investimento encontrado
+                        </TableCell>
+                    </TableRow>
+                )}
                 {isLoading && (
                     <TableRow>
                         <TableCell className="text-left">
@@ -56,6 +58,21 @@ const InvestmentsTable = () => {
                         </TableCell>
                     </TableRow>
                 )}
+                <TableRow>
+                    <TableCell
+                        colSpan={3}
+                        className="cursor-pointer bg-gray-100 transition-all hover:bg-gray-200"
+                    >
+                        <NewInvestmentForm
+                            trigger={
+                                <span className="flex items-center justify-center gap-2 py-1 text-xs">
+                                    Nova Movimentação
+                                    <PlusIcon height={".8rem"} />
+                                </span>
+                            }
+                        />
+                    </TableCell>
+                </TableRow>
             </TableBody>
         </Table>
     )

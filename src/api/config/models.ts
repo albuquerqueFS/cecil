@@ -60,7 +60,7 @@ export type MovementResponse = {
     value: string
     name: string
     is_recurrent: boolean
-    types: string
+    types: MovementTypes
     category: string
     created_at: string
     updated_at: string
@@ -70,7 +70,7 @@ export type MovementResponse = {
 export type MovementBodyRequest = {
     value: number
     name: string
-    type: MovementTypes
+    types: MovementTypes
     category: string
     is_recurrent: boolean
 }

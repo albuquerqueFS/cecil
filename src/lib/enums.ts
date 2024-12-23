@@ -5,6 +5,6 @@ export enum InvestmentTypes {
 }
 
 export enum MovementTypes {
-    INCOME = "INCOME",
-    OUTCOME = "OUTCOME",
+    INCOME = "Income",
+    OUTCOME = "Expense",
 }

@@ -1,3 +1,4 @@
+import { CECIL_URLS } from "@/lib/constants"
 import Axios from "axios"
 
 if (!import.meta.env.VITE_BACKEND_URL) {
@@ -39,7 +40,7 @@ axios.interceptors.response.use(
             } catch (refreshError) {
                 localStorage.removeItem("token")
                 localStorage.removeItem("refreshToken")
-                window.location.href = "/auth/login"
+                window.location.href = CECIL_URLS.login
 
                 return Promise.reject(refreshError)
             }

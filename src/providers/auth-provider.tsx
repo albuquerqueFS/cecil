@@ -1,3 +1,4 @@
+import { CECIL_URLS as urls } from "@/lib/constants"
 import axios from "@api/config/axios"
 import { JWTToken } from "@api/config/models"
 import {
@@ -40,28 +41,32 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         setRefresh_(null)
         setToken_(null)
         setName_(null)
-        navigate("/auth/login")
+        navigate(urls.login)
     }
 
     useEffect(() => {
+        if (pathname.split("/")[2] === "auth") {
+            return
+        }
         if (pathname.startsWith("/app") || pathname.startsWith("/auth")) {
             if (token) {
+                console.log("token found")
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + token
                 localStorage.setItem("refreshToken", refresh as string)
                 localStorage.setItem("token", token)
                 localStorage.setItem("name", name as string)
             } else {
+                console.log("no token found")
                 delete axios.defaults.headers.common["Authorization"]
                 localStorage.removeItem("refreshToken")
                 localStorage.removeItem("token")
                 localStorage.removeItem("name")
-                navigate("/auth/login")
+                navigate(urls.root)
             }
         }
     }, [token])
 
-    // Memoized value of the authentication context
     const contextValue = useMemo(
         () => ({
             token,
@@ -72,7 +77,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         [token],
     )
 
-    // Provide the authentication context to the children components
     return (
         <AuthContext.Provider value={contextValue}>
             {children}

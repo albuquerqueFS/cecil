@@ -1,25 +1,40 @@
+import { MovementResponse } from "@/api/config/models"
+import { motion } from "framer-motion"
+
 interface Props {
     title: string
     values: { value: string; description: string }[]
     color: string
+    data: MovementResponse[]
 }
 
-export const QuickSummaryCard = ({ title, values, color }: Props) => {
+export const QuickSummaryCard = ({ title, color, data }: Props) => {
+    console.log(data)
     return (
-        <div className="relative flex h-fit flex-col items-start justify-start gap-2 px-5">
-            <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-t from-white from-[3%] to-transparent"></div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative flex h-fit flex-col items-start justify-start gap-2 px-5"
+        >
+            {/* <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-t from-white from-[3%] to-transparent"></div> */}
             <p className="ml-1 whitespace-nowrap text-xs font-light">{title}</p>
             <ul className="flex flex-col flex-nowrap items-start justify-start">
-                {values.map((entry) => (
+                {data.map((entry) => (
                     <li className="whitespace-nowrap text-sm" key={entry.value}>
                         <span className={`mr-2 text-${color}`}>
                             {entry.value}
                         </span>{" "}
-                        {entry.description}
+                        {entry.name}
                     </li>
                 ))}
+                {data.length === 0 && (
+                    <li className="whitespace-nowrap text-sm">
+                        Nenhuma movimentação encontrada
+                    </li>
+                )}
             </ul>
-        </div>
+        </motion.div>
     )
 }
 
